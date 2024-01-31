@@ -11,7 +11,6 @@ def validUTF8(data):
     Returns:
     True if the data is valid UTF-8, False otherwise.
     """
-
     num_bytes = 0
 
     for byte in data:
