@@ -1,43 +1,34 @@
 #!/usr/bin/python3
-"""Prime Game"""
-
+'''
+prime game
+'''
 
 
 def isWinner(x, nums):
-    """x - rounds
-    nums - numbers list
-    """
-    if x <= 0 or nums is None:
+    '''
+    Returns: name of the player that won the most rounds
+    x is the number of rounds and nums is an array of n
+    '''
+    if not nums or x < 1:
         return None
-    if x != len(nums):
+    max_numbers = max(nums)
+    filters = [True for _ in range(max(max_numbers + 1, 2))]
+    for i in range(2, int(pow(max_numbers, 0.5)) + 1):
+        if not filters[i]:
+            continue
+        for j in range(i * i, max_numbers + 1, i):
+            filters[j] = False
+    filters[0] = filters[1] = False
+    c = 0
+    for i in range(len(filters)):
+        if filters[i]:
+            c += 1
+        filters[i] = c
+    player_number_one = 0
+    for max_numbers in nums:
+        player_number_one += filters[max_numbers] % 2 == 1
+    if player_number_one * 2 == len(nums):
         return None
-
-    ben = 0
-    maria = 0
-
-    a = [1 for x in range(sorted(nums)[-1] + 1)]
-    a[0], a[1] = 0, 0
-    for i in range(2, len(a)):
-        rm_multiples(a, i)
-
-    for i in nums:
-        if sum(a[0:i + 1]) % 2 == 0:
-            ben += 1
-        else:
-            maria += 1
-    if ben > maria:
-        return "Ben"
-    if maria > ben:
+    if player_number_one * 2 > len(nums):
         return "Maria"
-    return None
-
-
-def rm_multiples(ls, x):
-    """removes multiple
-    of primes
-    """
-    for i in range(2, len(ls)):
-        try:
-            ls[i * x] = 0
-        except (ValueError, IndexError):
-            break
+    return "Ben"
