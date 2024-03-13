@@ -2,6 +2,18 @@
 """Prime Game"""
 
 
+def is_prime(num):
+    """
+    Check if a number is prime
+    """
+    if num < 2:
+        return False
+    for i in range(2, int(num**0.5) + 1):
+        if num % i == 0:
+            return False
+    return True
+
+
 def isWinner(x, nums):
     """
     Determines the winner of a game played x rounds
@@ -12,14 +24,6 @@ def isWinner(x, nums):
     Returns:
     Name of player with the most wins or None if number of wins is equal
     """
-    if num < 2:
-        return False
-    for i in range(2, int(num**0.5) + 1):
-        if num % i == 0:
-            return False
-    return True
-
-def isWinner(x, nums):
     winners = []
     for n in nums:
         maria_moves = True
